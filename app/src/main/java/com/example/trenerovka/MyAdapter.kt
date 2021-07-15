@@ -9,21 +9,42 @@ import kotlinx.android.synthetic.main.item.view.*
 
 class MyAdapter : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
+    var onClick: () -> Unit = {}
+
     var selectedItemPosition: Int = -1
         set(value) {
-            if (field != -1) {
-                models[field].isSelected = false
-                notifyItemChanged(field)
-            }
-             field = value
-             models[field].isSelected = true
-             notifyItemChanged(field)
+           if ( field == -1) {
+               field = value
+               models[field].isSelected = true
+               notifyItemChanged(field)
+           } else if (models[field].number == models[value].number && models[field] != models[value]) {
+               models[field].isSelected = false
+               models[value].isSelected = false
+               models[field].isSelected = false
+               notifyItemChanged(field)
+               notifyItemChanged(value)
+               field = -1
+           } else if (models[field].number != models[value].number) {
+               models[field].isSelected = false
+               notifyItemChanged(field)
+               field = -1
+           }
         }
+    //    set(value) {
+    //        if (field != -1) {
+    //            models[field].isSelected = false
+    //            notifyItemChanged(field)
+    //        }
+    //         field = value
+    //         models[field].isSelected = true
+    //         notifyItemChanged(field)
+    //    }
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun populateModel(user: User,position: Int) {
+        fun populateModel(user: User,position: Int,) {
             itemView.tvNumber.text = user.number.toString()
             itemView.bg.isVisible = user.isSelected
+            itemView.isVisible = user.vibi
             itemView.setOnClickListener {
                selectedItemPosition = position
             }
