@@ -20,7 +20,6 @@ class MyAdapter : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
            } else if (models[field].number == models[value].number && models[field] != models[value]) {
                models[field].isSelected = false
                models[value].isSelected = false
-               models[field].isSelected = false
                notifyItemChanged(field)
                notifyItemChanged(value)
                field = -1
@@ -44,7 +43,6 @@ class MyAdapter : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
         fun populateModel(user: User,position: Int,) {
             itemView.tvNumber.text = user.number.toString()
             itemView.bg.isVisible = user.isSelected
-            itemView.isVisible = user.vibi
             itemView.setOnClickListener {
                selectedItemPosition = position
             }
